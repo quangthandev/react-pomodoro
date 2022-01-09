@@ -13,7 +13,16 @@ import UnstyledButton from '../UnstyledButton/UnstyledButton';
 const size = 196;
 const strokeWidth = 8;
 
-const ProgressDisplay = ({ interval, mode, mute, status, onTimerCompleted, onControl }) => {
+const ProgressDisplay = (props) => {
+    const {
+      interval,
+      mode, 
+      mute,
+      status,
+      onTimerCompleted,
+      onControl
+    } = props;
+
     const [counter, setCounter] = useState(0);
 
     const [playOn] = useSound(play, { volume: 0.25 });
@@ -34,7 +43,7 @@ const ProgressDisplay = ({ interval, mode, mute, status, onTimerCompleted, onCon
           setCounter(c => c + 1);
         }
       },
-      status === "stop" ? null : 1000
+      status !== "running" ? null : 1000
     );
 
     return (
@@ -44,19 +53,19 @@ const ProgressDisplay = ({ interval, mode, mute, status, onTimerCompleted, onCon
                 <CircularProgressBar size={size} strokeWidth={strokeWidth} value={percentValue}>
                     <Clock seconds={counter} interval={interval * 60} />
                     <Control
-                      aria-label={`${status === "stop" ? "Start timer" : "Stop timer"}`}
-                      title={`${status === "stop" ? "Start timer" : "Stop timer"}`}
+                      aria-label={`${status === "running" ? "Pause timer" : "Start timer"}`}
+                      title={`${status === "running" ? "Pause timer" : "Start timer"}`}
                       onClick={() => {
-                        if (status === "stop") {
+                        if (status === "running") {
+                            onControl("PAUSE");
+                            !mute && playOff();
+                        } else {
                             onControl("START");
                             !mute && playOn();
-                        } else {
-                            onControl("STOP");
-                            !mute && playOff();
                         }
                       }}
                     >
-                        {status === "running" ? "STOP" : "START"}
+                        {status === "running" ? "PAUSE" : "START"}
                     </Control>
                 </CircularProgressBar>
             </VisibleDisk> 

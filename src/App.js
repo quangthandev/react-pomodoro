@@ -39,14 +39,12 @@ const reducer = (state, action) => {
         ...state,
         status: "running"
       };
-    case "STOP":
+    case "PAUSE":
       return {
         ...state,
-        status: "stop"
+        status: "paused"
       };
     case "TOGGLE_SOUND":
-      persistSetting("mute", !state.mute ? "1" : "0");
-
       return {
         ...state,
         mute: !state.mute
@@ -65,7 +63,7 @@ const reducer = (state, action) => {
         return {
           ...state,
           mode: "pomodoro",
-          status: state.autoStartPomodoros ? state.status : "stop"
+          status: state.autoStartPomodoros ? state.status : "stop",
         };
       }
     case "CHANGE_MODE":
@@ -160,6 +158,8 @@ function App() {
 
   const handleToggleSound = () => {
     dispatch({ type: "TOGGLE_SOUND" });
+
+    persistSetting("mute", !mute ? "1" : "0");
 
     if (!mute) {
       stopSound();
