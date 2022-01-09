@@ -4,9 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import GlobalStyles from "./components/GlobalStyles/GlobalStyles";
+import Theme from './Theme';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <Theme>
+        <App />
+      </Theme>
+    <GlobalStyles />
   </React.StrictMode>,
   document.getElementById('root')
 );
