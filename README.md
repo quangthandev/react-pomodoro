@@ -3,7 +3,7 @@
 
 ## Features
 * Full control (start/stop timer, change mode)
-* User-customizable (Timer intervals, font size, color theme...)
+* User-customizable settings (Timer intervals, font size, color theme...)
 * Alarm sound
 
 ## Running
