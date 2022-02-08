@@ -1,6 +1,10 @@
 # Pomodoro Web App
 🍅 Pomodoro timer web app built with React. UI design is inspired by Frontend Mentor's [challenge](https://www.frontendmentor.io/challenges/pomodoro-app-KBFnycJ6G).
 
+### [Live Demo](https://quangthan87.github.io/react-pomodoro/)
+
+![Screenshot](screenshot.jpg)
+
 ## Features
 * Full control (start/stop timer, change mode)
 * User-customizable settings (Timer intervals, font size, color theme...)
