@@ -9,5 +9,15 @@
 ## Running
 Clone this repo:
 ```sh
+git clone https://github.com/quangthan87/react-pomodoro.git
+```
+
+Install dependencies:
+```sh
 npm install
+```
+
+Start the development server:
+```sh
+npm start
 ```
