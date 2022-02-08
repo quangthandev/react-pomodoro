@@ -1,3 +1,12 @@
+export const START_TIMER = "START_TIMER";
+export const PAUSE_TIMER = "PAUSE_TIMER";
+export const TIMER_COMPLETED = "TIMER_COMPLETED";
+export const TOGGLE_SOUND = "TOGGLE_SOUND";
+export const CHANGE_MODE = "CHANGE_MODE";
+export const OPEN_SETTINGS = "OPEN_SETTINGS";
+export const CLOSE_SETTINGS = "CLOSE_SETTINGS";
+export const SAVE_SETTINGS = "SAVE_SETTINGS";
+
 export const COLORS = {
     white: '0deg 0% 100%',
     gray: {

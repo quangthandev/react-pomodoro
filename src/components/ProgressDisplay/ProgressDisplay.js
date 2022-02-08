@@ -9,6 +9,9 @@ import stop from '../../sounds/pause.mp3';
 import CircularProgressBar from '../CircularProgressBar/CircularProgressBar';
 import Clock from '../Clock/Clock';
 import UnstyledButton from '../UnstyledButton/UnstyledButton';
+import Icon from '../Icon/Icon';
+
+import { START_TIMER, PAUSE_TIMER } from '../../constants';
 
 const size = 196;
 const strokeWidth = 8;
@@ -46,6 +49,10 @@ const ProgressDisplay = (props) => {
       status !== "running" ? null : 1000
     );
 
+    const controlButton = status === "running"
+      ? <Icon id="pause" size="28" />
+      : <Icon id="play" size="28" />;
+
     return (
         <Wrapper>
             <BlurryDisk />
@@ -57,15 +64,15 @@ const ProgressDisplay = (props) => {
                       title={`${status === "running" ? "Pause timer" : "Start timer"}`}
                       onClick={() => {
                         if (status === "running") {
-                            onControl("PAUSE");
+                            onControl(PAUSE_TIMER);
                             !mute && playOff();
                         } else {
-                            onControl("START");
+                            onControl(START_TIMER);
                             !mute && playOn();
                         }
                       }}
                     >
-                        {status === "running" ? "PAUSE" : "START"}
+                        {controlButton}
                     </Control>
                 </CircularProgressBar>
             </VisibleDisk> 
@@ -111,8 +118,13 @@ const VisibleDisk = styled(Disk)`
 
 const Control = styled(UnstyledButton)`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
   font-size: 0.75em;
-  margin-top: ${size/2 + strokeWidth}px;
+  margin-top: ${size/2 + strokeWidth + 8}px;
   z-index: 3;
 `;
 

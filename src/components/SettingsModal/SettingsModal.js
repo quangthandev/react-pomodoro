@@ -58,7 +58,7 @@ const SettingsModal = ({ isOpen, onDismiss, onSubmit, intervals, autoStartBreaks
                 <ContentHeader>
                     <h2>Settings</h2>
                     <CloseButton onClick={onDismiss}>
-                        <Icon id="close" size="16" />
+                        <Icon id="close" size="20" />
                     </CloseButton>
                 </ContentHeader>
                 <ContentBody onSubmit={handleSubmit}>

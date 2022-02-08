@@ -49,6 +49,7 @@ const Title = styled.h1`
 const IconWrapper = styled.div`
   display: flex;
   gap: 16px;
+  margin-right: -10px;
 `;
 
 const IconButton = styled(UnstyledButton)`

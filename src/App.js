@@ -10,6 +10,17 @@ import MaxWidthWrapper from './components/MaxWidthWrapper/MaxWidthWrapper';
 
 import { getInitialSetting, persistSetting } from "./helpers";
 
+import {
+  START_TIMER,
+  PAUSE_TIMER,
+  TIMER_COMPLETED,
+  TOGGLE_SOUND,
+  CHANGE_MODE,
+  OPEN_SETTINGS,
+  CLOSE_SETTINGS,
+  SAVE_SETTINGS
+} from './constants';
+
 import alarmClock from './sounds/alarm-clock.mp3';
 
 const initialState = {
@@ -34,22 +45,17 @@ const reducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case "START":
+    case START_TIMER:
       return {
         ...state,
         status: "running"
       };
-    case "PAUSE":
+    case PAUSE_TIMER:
       return {
         ...state,
         status: "paused"
       };
-    case "TOGGLE_SOUND":
-      return {
-        ...state,
-        mute: !state.mute
-      };
-    case "TIMER_COMPLETED":
+    case TIMER_COMPLETED:
       if (state.mode === "pomodoro") {
         const pomodorosCount = state.pomodorosCount + 1;
 
@@ -66,23 +72,28 @@ const reducer = (state, action) => {
           status: state.autoStartPomodoros ? state.status : "stop",
         };
       }
-    case "CHANGE_MODE":
+    case TOGGLE_SOUND:
+      return {
+        ...state,
+        mute: !state.mute
+      };
+    case CHANGE_MODE:
       return {
         ...state,
         mode: payload,
         status: "stop"
       };
-    case "OPEN_SETTINGS":
+    case OPEN_SETTINGS:
       return {
         ...state,
         showSettings: true
       };
-    case "CLOSE_SETTINGS":
+    case CLOSE_SETTINGS:
       return {
         ...state,
         showSettings: false
       };
-    case "SAVE_SETTINGS":
+    case SAVE_SETTINGS:
       return {
         ...state,
         autoStartBreaks: payload.autoStartBreaks,
@@ -122,18 +133,18 @@ function App() {
 
   const theme = useTheme();
 
-  const [playAlarm, { stop: stopSound }] = useSound(alarmClock, {
+  const [playAlarm, { stop: stopAlarm }] = useSound(alarmClock, {
     volume: 0.25,
     soundEnabled: !mute
   });
 
   const handleTimerComplete = () => {
-    dispatch({ type: "TIMER_COMPLETED" });
+    dispatch({ type: TIMER_COMPLETED });
     playAlarm();
   };
 
   const handleOpenSettings = () => {
-    dispatch({ type: "OPEN_SETTINGS" });
+    dispatch({ type: OPEN_SETTINGS });
   };
 
   const handleChangeMode = (m) => {
@@ -145,7 +156,7 @@ function App() {
       }
     }
 
-    dispatch({ type: "CHANGE_MODE", payload: m });
+    dispatch({ type: CHANGE_MODE, payload: m });
   };
 
   const handleControl = (control) => {
@@ -153,16 +164,16 @@ function App() {
   };
 
   const handleSubmitSettings = (payload) => {
-    dispatch({ type: "SAVE_SETTINGS", payload });
+    dispatch({ type: SAVE_SETTINGS, payload });
   };
 
   const handleToggleSound = () => {
-    dispatch({ type: "TOGGLE_SOUND" });
+    dispatch({ type: TOGGLE_SOUND });
 
     persistSetting("mute", !mute ? "1" : "0");
 
     if (!mute) {
-      stopSound();
+      stopAlarm();
     }
   };
 
@@ -198,7 +209,7 @@ function App() {
           longBreakCycle={longBreakCycle}
           colorTheme={colorTheme}
           fontSize={fontSize}
-          onDismiss={() => dispatch({ type: "CLOSE_SETTINGS" })}
+          onDismiss={() => dispatch({ type: CLOSE_SETTINGS })}
           onSubmit={handleSubmitSettings}
       />
     </Container>

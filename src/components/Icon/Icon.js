@@ -4,14 +4,18 @@ import {
   Settings,
   Volume2,
   VolumeX,
-  X
+  X,
+  PlayCircle,
+  PauseCircle
 } from 'react-feather';
 
 const icons = {
   settings: Settings,
   volumeEnabled: Volume2,
   volumeDisabled: VolumeX,
-  close: X
+  close: X,
+  play: PlayCircle,
+  pause: PauseCircle
 };
 
 const Icon = ({ id, color, size, strokeWidth, ...delegated }) => {
