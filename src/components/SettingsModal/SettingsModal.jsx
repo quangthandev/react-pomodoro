@@ -11,7 +11,6 @@ import { QUERIES } from '../../constants';
 import Button from '../Button/Button';
 import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
 
-import { persistSetting } from '../../helpers';
 import * as Dialog from '@radix-ui/react-dialog';
 
 const SettingsModal = ({
@@ -40,16 +39,6 @@ const SettingsModal = ({
 			colorTheme: e.target.color.value,
 			fontSize: e.target.font.value
 		});
-
-		//Persist settings in local storage
-		persistSetting('pomodoro-interval', e.target.pomodoroInterval.value);
-		persistSetting('short-break-interval', e.target.shortBreakInterval.value);
-		persistSetting('long-break-interval', e.target.longBreakInterval.value);
-		persistSetting('long-break-cycle', e.target.longBreakCycle.value);
-		persistSetting('auto-start-breaks', e.target.autoStartBreaks.checked ? '1' : '0');
-		persistSetting('auto-start-pomodoros', e.target.autoStartPomodoros.checked ? '1' : '0');
-		persistSetting('color-theme', e.target.color.value);
-		persistSetting('font-size', e.target.font.value);
 
 		setOpen(false);
 	};
