@@ -7,7 +7,7 @@ import path from 'path';
 
 export default defineConfig({
 	// depending on your application, base can also be "/"
-	base: '',
+	base: '/react-pomodoro/',
 	plugins: [
 		react(),
 		viteTsconfigPaths(),
