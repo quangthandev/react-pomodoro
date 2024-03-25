@@ -1,1 +1,0 @@
-(void 0).addEventListener("message",t=>{const a=t.data,{title:e,body:i,icon:n}=a,o={body:i,icon:n,vibrate:[100,50,100],data:{dateOfArrival:Date.now(),primaryKey:1}};t.waitUntil((void 0).registration.showNotification(e,o))});
