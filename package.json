@@ -49,6 +49,7 @@
 		"@vitest/coverage-v8": "^1.4.0",
 		"gh-pages": "^3.2.3",
 		"jsdom": "^24.0.0",
+		"vite-plugin-pwa": "^0.19.7",
 		"vitest": "^1.4.0"
 	}
 }
