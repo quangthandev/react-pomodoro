@@ -16,7 +16,7 @@ export default defineConfig({
 			devOptions: {
 				enabled: true
 			},
-			outDir: path.resolve(__dirname, 'public'),
+			// outDir: path.resolve(__dirname, 'public'),
 			manifest: {
 				short_name: 'PomoReact',
 				name: 'PomoReact',
@@ -56,6 +56,9 @@ export default defineConfig({
 			srcDir: path.resolve(__dirname, 'src'),
 			filename: 'service-worker.js',
 			strategies: 'injectManifest',
+			injectManifest: {
+				injectionPoint: undefined
+			},
 
 			workbox: {
 				globDirectory: path.resolve(__dirname, 'public'),
