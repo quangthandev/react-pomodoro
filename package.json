@@ -20,7 +20,7 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build",
+		"deploy": "gh-pages -d dist",
 		"test": "vitest",
 		"test:coverage": "vitest run --coverage --watch=false"
 	},
