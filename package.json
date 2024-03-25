@@ -3,6 +3,7 @@
 	"name": "react-pomodoro",
 	"version": "0.1.0",
 	"private": true,
+	"type": "module",
 	"dependencies": {
 		"@radix-ui/react-dialog": "^1.0.5",
 		"@vitejs/plugin-react": "^4.2.1",

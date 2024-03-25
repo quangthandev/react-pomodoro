@@ -14,9 +14,9 @@ export default defineConfig({
 		VitePWA({
 			registerType: 'autoUpdate',
 			devOptions: {
-				enabled: true
+				enabled: true,
+				type: 'module'
 			},
-			// outDir: path.resolve(__dirname, 'public'),
 			manifest: {
 				short_name: 'PomoReact',
 				name: 'PomoReact',
@@ -33,6 +33,7 @@ export default defineConfig({
 					}
 				],
 				start_url: '.',
+				scope: '.',
 				display: 'standalone',
 				theme_color: '#f56d6b',
 				background_color: '#ffffff',

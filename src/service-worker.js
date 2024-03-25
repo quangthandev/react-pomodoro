@@ -1,5 +1,3 @@
-const self = this;
-
 self.addEventListener('message', (e) => {
 	const data = e.data;
 	const { title, body, icon } = data;
