@@ -48,7 +48,7 @@ const reducer = (state, action) => {
 		case TICK:
 			return {
 				...state,
-				count: state.count + payload
+				count: state.status === 'running' ? state.count + 1 : state.count
 			};
 		case START_TIMER: {
 			return {

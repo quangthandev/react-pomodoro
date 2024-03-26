@@ -33,6 +33,8 @@ const usePomodoro = () => {
 		dispatch({ type: CHANGE_MODE, payload: mode });
 	}, []);
 
+	const cleanup = React.useRef(() => {});
+
 	const handleControl = React.useCallback(
 		(control) => {
 			switch (control) {
@@ -45,7 +47,7 @@ const usePomodoro = () => {
 						Notification.requestPermission();
 					}
 
-					startTimer(interval * 60 - count, (e) => {
+					cleanup.current = startTimer(interval * 60 - count, (e) => {
 						dispatch({ type: TICK, payload: e.data });
 					});
 
@@ -54,6 +56,7 @@ const usePomodoro = () => {
 				}
 				case PAUSE_TIMER: {
 					stopTimer();
+					cleanup.current();
 					dispatch({ type: control });
 					break;
 				}

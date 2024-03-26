@@ -2,19 +2,22 @@ const timeWorker = new Worker(new URL('./time-worker.js', import.meta.url), {
 	type: 'module'
 });
 
-let savedTick = null;
-
 /**
- * Starts the time worker with the given interval in seconds
+ * Starts the time worker with the given interval in seconds and a tick callback function
  *
  * @param {number} interval
  * @param {Function} tick
+ *
+ * @returns {Function} function to remove the message event listener
  */
 function startTimer(interval, tick) {
 	timeWorker.postMessage(`start-timer_${interval}`);
 
-	savedTick = tick;
 	timeWorker.addEventListener('message', tick);
+
+	return () => {
+		timeWorker.removeEventListener('message', tick);
+	};
 }
 
 /**
@@ -22,7 +25,6 @@ function startTimer(interval, tick) {
  */
 function stopTimer() {
 	timeWorker.postMessage('stop-timer');
-	timeWorker.removeEventListener('message', savedTick);
 }
 
 /**
