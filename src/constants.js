@@ -25,7 +25,8 @@ export const COLORS = {
 		100: '234deg 34% 23%',
 		300: '235deg 36% 18%',
 		500: '232deg 41% 14%'
-	}
+	},
+	accent: '204deg 100% 50%'
 };
 
 export const WEIGHTS = {
