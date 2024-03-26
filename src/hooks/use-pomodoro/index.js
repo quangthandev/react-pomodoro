@@ -28,12 +28,13 @@ const usePomodoro = () => {
 
 	const interval = intervals[mode];
 
+	const cleanup = React.useRef(() => {});
+
 	const handleSwitchMode = React.useCallback((mode) => {
 		stopTimer();
+		cleanup.current();
 		dispatch({ type: CHANGE_MODE, payload: mode });
 	}, []);
-
-	const cleanup = React.useRef(() => {});
 
 	const handleControl = React.useCallback(
 		(control) => {
