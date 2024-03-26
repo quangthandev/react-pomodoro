@@ -4,10 +4,9 @@ import react from '@vitejs/plugin-react';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
-
 export default defineConfig({
 	// depending on your application, base can also be "/"
-	base: '/react-pomodoro/',
+	base: process.env.NODE_ENV === 'production' ? '/react-pomodoro/' : '/',
 	plugins: [
 		react(),
 		viteTsconfigPaths(),
@@ -35,6 +34,7 @@ export default defineConfig({
 				start_url: '.',
 				scope: '.',
 				display: 'standalone',
+				orientation: 'portrait',
 				theme_color: '#f56d6b',
 				background_color: '#ffffff',
 				description: 'A simple Pomodoro Timer built with React',
@@ -57,13 +57,10 @@ export default defineConfig({
 			srcDir: path.resolve(__dirname, 'src'),
 			filename: 'service-worker.js',
 			strategies: 'injectManifest',
-			injectManifest: {
-				injectionPoint: undefined
-			},
 
 			workbox: {
 				globDirectory: path.resolve(__dirname, 'public'),
-				globPatterns: ['{build,images,sounds,icons}/**/*.{js,css,html,ico,png,jpg,mp4,svg}']
+				globPatterns: ['{dist,images,sounds,icons}/**/*.{js,css,html,ico,png,jpg,mp4,svg}']
 			}
 		})
 	],
