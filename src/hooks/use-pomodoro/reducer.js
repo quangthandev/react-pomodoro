@@ -11,6 +11,7 @@ import {
 	TOGGLE_SOUND
 } from '../../constants';
 import { changeTimer } from '../../app.web-worker';
+import { showNotification } from '../../notification';
 
 const initialState = {
 	mode: 'pomodoro', // pomodoro, shortBreak, longBreak
@@ -74,6 +75,19 @@ const reducer = (state, action) => {
 				}
 				const newInterval = intervals[newMode];
 
+				// show notification
+				let title, body;
+				if (newMode === 'shortBreak') {
+					title = 'Short Break Time!';
+					body = `Take a short break for ${newInterval}min.`;
+				} else {
+					title = 'Long Break Time!';
+					body = `Take a long break for ${newInterval}min.`;
+				}
+				if (Notification.permission === 'granted') {
+					showNotification(title, { body });
+				}
+
 				changeTimer(newInterval * 60);
 
 				return {
@@ -85,6 +99,13 @@ const reducer = (state, action) => {
 				};
 			} else {
 				changeTimer(intervals.pomodoro * 60);
+
+				// show notification
+				if (Notification.permission === 'granted') {
+					showNotification('Focus Time!', {
+						body: `Time to focus for ${intervals.pomodoro}min.`
+					});
+				}
 
 				return {
 					...state,

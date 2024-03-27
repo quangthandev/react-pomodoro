@@ -15,7 +15,6 @@ import useSound from 'use-sound';
 import alarmClock from '../../sounds/alarm-clock.mp3';
 import { startTimer, stopTimer } from '../../app.web-worker';
 import { initialState, reducer } from './reducer';
-import { showNotification } from '../../notification';
 
 const usePomodoro = () => {
 	const [state, dispatch] = React.useReducer(reducer, initialState);
@@ -36,6 +35,10 @@ const usePomodoro = () => {
 		dispatch({ type: CHANGE_MODE, payload: mode });
 	}, []);
 
+	const tick = React.useCallback((e) => {
+		dispatch({ type: TICK, payload: e.data });
+	}, []);
+
 	const handleControl = React.useCallback(
 		(control) => {
 			switch (control) {
@@ -48,9 +51,7 @@ const usePomodoro = () => {
 						Notification.requestPermission();
 					}
 
-					cleanup.current = startTimer(interval * 60 - count, (e) => {
-						dispatch({ type: TICK, payload: e.data });
-					});
+					cleanup.current = startTimer(interval * 60 - count, tick);
 
 					dispatch({ type: control });
 					break;
@@ -64,19 +65,13 @@ const usePomodoro = () => {
 				default:
 			}
 		},
-		[count, interval]
+		[count, interval, tick]
 	);
 
 	const handleTimerCompleted = React.useCallback(() => {
-		if (Notification.permission === 'granted') {
-			showNotification(mode === 'pomodoro' ? 'Break time!' : 'Pomodoro time!', {
-				body: mode === 'pomodoro' ? 'Time to take a break' : 'Time to start working'
-			});
-		}
-
 		dispatch({ type: TIMER_COMPLETED });
 		playAlarm();
-	}, [mode, playAlarm]);
+	}, [playAlarm]);
 
 	const handleToggleOpenSettings = React.useCallback((open) => {
 		if (open) {
