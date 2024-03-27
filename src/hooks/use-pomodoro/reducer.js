@@ -63,8 +63,15 @@ const reducer = (state, action) => {
 			};
 		case TIMER_COMPLETED: {
 			if (mode === 'pomodoro') {
-				const newPomodorosCount = pomodorosCount + 1 === longBreakCycle ? 0 : pomodorosCount + 1;
-				const newMode = newPomodorosCount === longBreakCycle ? 'longBreak' : 'shortBreak';
+				let newPomodorosCount = pomodorosCount + 1;
+
+				let newMode;
+				if (newPomodorosCount >= longBreakCycle) {
+					newMode = 'longBreak';
+					newPomodorosCount = 0;
+				} else {
+					newMode = 'shortBreak';
+				}
 				const newInterval = intervals[newMode];
 
 				changeTimer(newInterval * 60);
