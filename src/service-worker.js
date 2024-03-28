@@ -24,19 +24,25 @@ function onMessage(e) {
 }
 
 function onFetch(e) {
+	// Check if request is GET and same origin
+	if (e.request.method !== 'GET' || new URL(e.request.url).origin !== location.origin) {
+		return;
+	}
+
+	e.respondWith(respond());
+
 	async function respond() {
 		const cache = await caches.open('assets');
 		const cachedResponse = await cache.match(e.request);
 
-		if (cachedResponse) {
+		// Use network first strategy
+		try {
+			const response = await fetch(e.request);
+			await cache.put(e.request, response.clone());
+
+			return response;
+		} catch (error) {
 			return cachedResponse;
 		}
-
-		const response = await fetch(e.request);
-		await cache.put(e.request, response.clone());
-
-		return response;
 	}
-
-	e.respondWith(respond());
 }
